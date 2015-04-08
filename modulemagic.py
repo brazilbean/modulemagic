@@ -1,15 +1,13 @@
-## beans.magics
+## modulemagic - IPython Notebook cell magic %%module
 # Gordon Bean, April 2015
-
-# To use these magics, you must register them with IPython
-# e.g:
-# from beans.magics import ModuleMagics
-# ip = get_ipython()
-# ip.register_magics(ModuleMagics)
 
 from IPython.core.magic import Magics, magics_class, cell_magic
 import os, sys, importlib
 
+## Functions for loading the extension
+def load_ipython_extension(ipython):
+    ipython.register_magics(ModuleMagics)
+    
 @magics_class
 class ModuleMagics(Magics):
     '''Magics for creating modules in IPython.'''
