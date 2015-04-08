@@ -2,7 +2,7 @@
 # Gordon Bean, April 2015
 
 from IPython.core.magic import Magics, magics_class, cell_magic
-import os, sys, importlib
+import os, sys, importlib, argparse
 
 ## Functions for loading the extension
 def load_ipython_extension(ipython):
@@ -41,18 +41,23 @@ class ModuleMagics(Magics):
     @cell_magic
     def module(self, line, cell):
         '''Import the cell as a module.'''
-        # Parse module name
-        tokens = line.split()
-        name = tokens[0]
-
+        # Parse the parameters
+        parser = argparse.ArgumentParser('%%module cell magic')
+        parser.add_argument('name')
+        parser.add_argument('-p','--path', default=self.module_dir)
+        args = parser.parse_args(line.split())
+        
+        name = args.name
+        
         # Save to file
-        filename = os.path.join(self.module_dir, name + '.py')
+        os.makedirs(args.path, exist_ok=True)
+        filename = os.path.join(args.path, name + '.py')
         with open(filename, 'w') as f:
             f.write(cell)
 
         # Import module
-        if self.module_dir not in sys.path:
-            sys.path.insert(0, self.module_dir)
+        if args.path not in sys.path:
+            sys.path.insert(0, args.path)
 
         if name in sys.modules:
             # Always reload
