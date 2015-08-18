@@ -2,7 +2,7 @@
 # Gordon Bean, April 2015
 
 from IPython.core.magic import Magics, magics_class, cell_magic
-import os, sys, importlib, argparse
+import os, sys, importlib, argparse, tempfile
 
 ## Functions for loading the extension
 def load_ipython_extension(ipython):
@@ -24,7 +24,7 @@ class ModuleMagics(Magics):
         self.kernelID = os.path.basename(shell.kernel.config['IPKernelApp']['connection_file'])[:-5]
         
         # Create kernel-specific tmp-module directory
-        self.module_dir = os.path.join('/tmp/.tmp-modules', self.kernelID)
+        self.module_dir = tempfile.mkdtemp(self.kernelID)
         os.makedirs(self.module_dir, exist_ok=True)
     
     def __del__(self):
