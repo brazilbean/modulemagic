@@ -1,3 +1,4 @@
-from .modulemagic import *
+from .modulemagic import load_ipython_extension
 
-__version__ = '0.0.1'
+__version__ = '0.2.1'
+

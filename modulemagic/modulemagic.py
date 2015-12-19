@@ -1,8 +1,6 @@
 ## modulemagic - IPython Notebook cell magic %%module
 # Gordon Bean, April 2015
 
-__version__ = "0.2.0"
-
 from IPython.core.magic import Magics, magics_class, cell_magic
 import os, sys, importlib, argparse, tempfile
 
